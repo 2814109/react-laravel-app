@@ -35,6 +35,14 @@ php artisan migrate
 
 ### frontend のルートディレクトリで npm package をインストール
 
+### 環境変数を定義
+
+frontend 配下に.env ファイルを作成する
+
+```
+VITE_ENDPONT=http://localhost:{PORT_NUMBER}/graphql
+```
+
 ## システム構成
 
 ### backend : Laravel(Php)
