@@ -10,6 +10,13 @@ docker compose up -d --build
 
 ### STEP2：環境変数定義（5 分）
 
+src 配下に.env ファイルを作成
+
+```
+cd src
+cp .env.example .env
+```
+
 src/.env を docker-compose の DB サービスで定義している環境変数と対応するように書き換え
 
 ### STEP3：DB マイグレーション（5 分）
