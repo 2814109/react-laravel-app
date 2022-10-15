@@ -39,6 +39,8 @@ php artisan migrate
 
 frontend 配下に.env ファイルを作成する
 
+以下環境変数を定義
+
 ```
 VITE_ENDPONT=http://localhost:{PORT_NUMBER}/graphql
 ```
