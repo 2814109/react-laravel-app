@@ -1,6 +1,6 @@
 # react-laravel-app
 
-## 環境構築（所要時間：15 分）
+## 環境構築 backend（所要時間：15 分）
 
 ### STEP1：コンテナ起動（5 分）
 
@@ -27,8 +27,18 @@ app コンテナに侵入し以下コマンドを実行
 php artisan migrate
 ```
 
+## 環境構築 frontend(所要時間 15 分)
+
+### Node インストール
+
+### Yarn インストール
+
+### frontend のルートディレクトリで npm package をインストール
+
 ## システム構成
 
 ### backend : Laravel(Php)
 
 ### Frontend : Vite for React(Typescript)
+
+### RestAPI
