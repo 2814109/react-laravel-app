@@ -26,3 +26,9 @@ app コンテナに侵入し以下コマンドを実行
 ```
 php artisan migrate
 ```
+
+## システム構成
+
+### backend : Laravel(Php)
+
+### Frontend : Vite for React(Typescript)
