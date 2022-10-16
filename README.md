@@ -52,3 +52,12 @@ VITE_ENDPONT=http://localhost:{PORT_NUMBER}
 ### Frontend : Vite for React(Typescript)
 
 ### RestAPI
+
+## API 仕様書の書き方
+
+ルートディレクトリで DockerComposeUp し、コンテナを生成  
+http://localhost:8001/  
+上記にアクセス
+File タブの ImportFile を選択し、root/api/openapi.yaml を選択し Open  
+編集を行い File タブの SaveAsYAML でファイルを保存
+保存したファイルを api/配下に保存し、PR 作成
