@@ -19,7 +19,7 @@ const InputSection: FC = () => {
         </Box>
         <Spacer />
         <Box w={"20%"} mt={"auto"}>
-          <Button>登録</Button>
+          <Button colorScheme="teal">登録</Button>
         </Box>
       </Flex>
     </FormControl>
