@@ -1,6 +1,6 @@
 # react-laravel-app
 
-## 環境構築 backend（所要時間：15 分）
+## 環境構築 backend of laravel（所要時間：15 分）
 
 ### STEP1：コンテナ起動（5 分）
 
@@ -26,6 +26,17 @@ app コンテナに侵入し以下コマンドを実行
 ```
 php artisan migrate
 ```
+
+## 環境構築　 backend of axum
+
+```
+cargo build
+
+cargo run
+
+```
+
+上記で localhost:3333 に疎通
 
 ## 環境構築 frontend(所要時間 15 分)
 
