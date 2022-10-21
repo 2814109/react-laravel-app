@@ -1,12 +1,8 @@
-use axum::{
-    routing::get,
-    Router,
-    // routing::BoxRoute
-};
+use axum::{routing::get, Router};
 
 pub fn app() -> Router {
     let router: Router = Router::new()
-        .route("/", get(|| async { "Hello, World!" }))
+        .route("/", get(|| async { "Hello, World! 1" }))
         .route("/test", get(|| async { "Hello, World! 2" }));
     return router;
 }
