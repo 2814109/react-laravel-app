@@ -7,21 +7,25 @@ pub struct Migration;
 impl MigrationTrait for Migration {
     async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         // Replace the sample below with your own migration scripts
+        // todo!();
 
         manager
             .create_table(
                 Table::create()
-                    .table(Post::Table)
+                    .table(Task::Table)
                     .if_not_exists()
                     .col(
-                        ColumnDef::new(Post::Id)
+                        ColumnDef::new(Task::Id)
                             .integer()
                             .not_null()
                             .auto_increment()
                             .primary_key(),
                     )
-                    .col(ColumnDef::new(Post::Title).string().not_null())
-                    .col(ColumnDef::new(Post::Text).string().not_null())
+                    .col(ColumnDef::new(Task::Title).string().not_null())
+                    .col(ColumnDef::new(Task::IsClosed).boolean().not_null())
+                    // .col(ColumnDef::new(Task::CreatedAt).date_time().not_null())
+                    // .col(ColumnDef::new(Task::UpdatedAt).date_time().not_null())
+
                     .to_owned(),
             )
             .await
@@ -29,18 +33,21 @@ impl MigrationTrait for Migration {
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         // Replace the sample below with your own migration scripts
+        // todo!();
 
         manager
-            .drop_table(Table::drop().table(Post::Table).to_owned())
+            .drop_table(Table::drop().table(Task::Table).to_owned())
             .await
     }
 }
 
 /// Learn more at https://docs.rs/sea-query#iden
 #[derive(Iden)]
-enum Post {
+enum Task {
     Table,
     Id,
     Title,
-    Text,
+    IsClosed,
+    // CreatedAt,
+    // UpdatedAt
 }
