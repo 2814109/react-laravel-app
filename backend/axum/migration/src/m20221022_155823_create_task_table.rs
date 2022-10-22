@@ -23,8 +23,8 @@ impl MigrationTrait for Migration {
                     )
                     .col(ColumnDef::new(Task::Title).string().not_null())
                     .col(ColumnDef::new(Task::IsClosed).boolean().not_null())
-                    // .col(ColumnDef::new(Task::CreatedAt).date_time().not_null())
-                    // .col(ColumnDef::new(Task::UpdatedAt).date_time().not_null())
+                    .col(ColumnDef::new(Task::CreatedAt).date_time().not_null())
+                    .col(ColumnDef::new(Task::UpdatedAt).date_time().not_null())
 
                     .to_owned(),
             )
@@ -43,11 +43,12 @@ impl MigrationTrait for Migration {
 
 /// Learn more at https://docs.rs/sea-query#iden
 #[derive(Iden)]
+#[iden(rename = "tasks")]
 enum Task {
     Table,
     Id,
     Title,
     IsClosed,
-    // CreatedAt,
-    // UpdatedAt
+    CreatedAt,
+    UpdatedAt
 }
