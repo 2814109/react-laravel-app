@@ -7,7 +7,7 @@ mod task;
 mod work;
 #[tokio::main]
 async fn main() {
-    task::create_one().await;
+    task::create_one("test2").await;
     //  let db: DatabaseConnection =
     Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
         .await

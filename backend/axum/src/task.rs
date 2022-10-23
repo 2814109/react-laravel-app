@@ -4,7 +4,6 @@ use sea_orm::{ActiveModelTrait, ActiveValue, Database, DatabaseConnection};
 // create時の引数を明示的に型定義する
 // pub struct CreateTask {
 //     title: String,
-//     is_closed: bool,
 // }
 // Custom する関数を定義
 // trait CustomTaskRepository {
@@ -30,12 +29,12 @@ use sea_orm::{ActiveModelTrait, ActiveValue, Database, DatabaseConnection};
 //     }
 // }
 
-pub async fn create_one() {
+pub async fn create_one(title: &str) {
     let utc: DateTime<Utc> = Utc::now();
     // entity を使ってinsert処理を実行
     let new_task = tasks::ActiveModel {
         id: ActiveValue::NotSet,
-        title: ActiveValue::Set("test".to_owned()),
+        title: ActiveValue::Set(title.to_owned()),
         is_closed: ActiveValue::Set(false),
         created_at: ActiveValue::Set(utc.naive_utc()),
         updated_at: ActiveValue::Set(utc.naive_utc()),
