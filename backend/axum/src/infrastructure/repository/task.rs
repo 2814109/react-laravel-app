@@ -38,12 +38,12 @@ pub async fn get_task_by_id() -> response::Json<Task> {
     let result = Tasks::find_by_id(5).one(&db).await;
     // let get_task = result.ok();
     // println!("{:?}", result.unwrap());
-    match result {
-        Ok(Some(tasks)) => println!("{:?}", tasks.id),
+    let get_id: i32 = match result {
+        Ok(Some(tasks)) => tasks.id,
         Err(_) => todo!(),
         Ok(None) => todo!(),
-    }
-    return response::Json(Task { id: 2 });
+    };
+    return response::Json(Task { id: get_id });
 }
 
 pub async fn get_all_task() -> response::Json<Task> {
