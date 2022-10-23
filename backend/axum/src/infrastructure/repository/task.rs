@@ -36,15 +36,14 @@ pub async fn get_task_by_id() -> response::Json<Task> {
             .expect("Database connection failed");
 
     let result = Tasks::find_by_id(5).one(&db).await;
-
-    let results = Tasks::find().all(&db).await;
-    println!("{:?}", result);
-
-    println!("{:?}", results);
-
+    // let get_task = result.ok();
+    // println!("{:?}", result.unwrap());
+    match result {
+        Ok(Some(tasks)) => println!("{:?}", tasks.id),
+        Err(_) => todo!(),
+        Ok(None) => todo!(),
+    }
     return response::Json(Task { id: 2 });
-
-    // return response::Json(Task { id: 11 });
 }
 
 pub async fn get_all_task() -> response::Json<Task> {
