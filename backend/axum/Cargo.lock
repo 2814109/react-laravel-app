@@ -95,6 +95,7 @@ dependencies = [
  "chrono",
  "hyper",
  "sea-orm",
+ "serde",
  "tokio",
  "tower",
 ]

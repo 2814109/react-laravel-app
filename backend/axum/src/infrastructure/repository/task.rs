@@ -1,13 +1,14 @@
 use crate::entity::prelude::Tasks;
 use crate::entity::tasks;
-// use axum::response;
+use axum::response;
 use chrono::{DateTime, Utc};
 use sea_orm::{ActiveModelTrait, ActiveValue, Database, DatabaseConnection, EntityTrait};
-// use serde::Serialize;
-// #[derive(Serialize)]
-// struct Task {
-//     id: i32,
-// }
+use serde::Serialize;
+
+#[derive(Serialize)]
+pub struct Task {
+    id: i32,
+}
 
 pub async fn create_one(title: &str) {
     let utc: DateTime<Utc> = Utc::now();
@@ -28,7 +29,7 @@ pub async fn create_one(title: &str) {
     println!("{:?}", result);
 }
 
-pub async fn get_task_by_id() {
+pub async fn get_task_by_id() -> response::Json<Task> {
     let db: DatabaseConnection =
         Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
             .await
@@ -36,6 +37,7 @@ pub async fn get_task_by_id() {
 
     let result = Tasks::find_by_id(5).one(&db).await;
     println!("{:?}", result);
+    return response::Json(Task { id: 2 });
 
     // return response::Json(Task { id: 11 });
 }
