@@ -1,5 +1,11 @@
 # react-laravel-app
 
+## hot reload for cargo
+
+```
+cargo watch -x run
+```
+
 ## 環境構築 backend of laravel（所要時間：15 分）
 
 ### STEP1：コンテナ起動（5 分）
