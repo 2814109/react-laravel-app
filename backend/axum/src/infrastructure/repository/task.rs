@@ -36,7 +36,27 @@ pub async fn get_task_by_id() -> response::Json<Task> {
             .expect("Database connection failed");
 
     let result = Tasks::find_by_id(5).one(&db).await;
+
+    let results = Tasks::find().all(&db).await;
     println!("{:?}", result);
+
+    println!("{:?}", results);
+
+    return response::Json(Task { id: 2 });
+
+    // return response::Json(Task { id: 11 });
+}
+
+pub async fn get_all_task() -> response::Json<Task> {
+    let db: DatabaseConnection =
+        Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
+            .await
+            .expect("Database connection failed");
+
+    let results = Tasks::find().all(&db).await;
+
+    println!("{:?}", results);
+
     return response::Json(Task { id: 2 });
 
     // return response::Json(Task { id: 11 });
