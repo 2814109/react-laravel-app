@@ -2,7 +2,9 @@ use crate::entity::prelude::Tasks;
 use crate::entity::tasks;
 use axum::response;
 use chrono::{DateTime, Utc};
-use sea_orm::{ActiveModelTrait, ActiveValue, Database, DatabaseConnection, EntityTrait};
+use sea_orm::{
+    ActiveModelTrait, ActiveValue, Database, DatabaseConnection, EntityTrait, JsonValue,
+};
 use serde::Serialize;
 
 #[derive(Serialize)]
@@ -18,8 +20,11 @@ pub struct TaskItem {
     created_at: DateTime<Utc>,
     updated_at: DateTime<Utc>,
 }
-// #[derive(Serialize)]
-// pub struct TaskList(Vec<TaskItem>);
+
+#[derive(Serialize)]
+pub struct TaskList {
+    pub task_list: Vec<JsonValue>,
+}
 
 pub async fn create_one(title: &str) {
     let utc: DateTime<Utc> = Utc::now();
@@ -56,18 +61,18 @@ pub async fn get_task_by_id() -> response::Json<Task> {
     return response::Json(Task { id: get_id });
 }
 
-pub async fn get_all_task() -> response::Json<Task> {
+pub async fn get_all_task() -> response::Json<TaskList> {
     let db: DatabaseConnection =
         Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
             .await
             .expect("Database connection failed");
 
-    let results = Tasks::find().all(&db).await;
-    let tasks_data = match results {
-        Ok(tasks) => tasks,
-        Err(_) => todo!(),
-        // Ok(None) => todo!(),
-    };
+    let results = Tasks::find().into_json().all(&db).await;
+    // let tasks_data: Vec<TaskItem> = match results {
+    //     Ok(tasks) => tasks,
+    //     Err(_) => todo!(),
+    //     // Ok(None) => todo!(),
+    // };
     // println!("{:?}", tasks_data);
 
     // let results_data =    tasks_data.into_iter().map(|argument| argument.id);
@@ -75,10 +80,12 @@ pub async fn get_all_task() -> response::Json<Task> {
     // let results_data = tasks_data.into_iter().map(|argument| argument.id);
     // println!("{:?}", results_data);
 
-    for value in &tasks_data {
-        println!("{:?}", value);
-    }
+    // for value in &tasks_data {
+    //     println!("{:?}", value);
+    // }
     // return response::Json::<Vec<Tasks>>(&tasks_data.unwrap());
 
-    return response::Json(Task { id: 1 });
+    return response::Json(TaskList {
+        task_list: results.unwrap(),
+    });
 }
