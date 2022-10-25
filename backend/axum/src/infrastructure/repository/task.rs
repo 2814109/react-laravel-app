@@ -2,9 +2,7 @@ use crate::entity::prelude::Tasks;
 use crate::entity::tasks;
 use axum::response;
 use chrono::{DateTime, Utc};
-use sea_orm::{
-    ActiveModelTrait, ActiveValue, Database, DatabaseConnection, EntityTrait, JsonValue,
-};
+use sea_orm::{ActiveModelTrait, ActiveValue, Database, DatabaseConnection, EntityTrait, JsonValue};
 use serde::Serialize;
 
 #[derive(Serialize)]
@@ -85,7 +83,5 @@ pub async fn get_all_task() -> response::Json<TaskList> {
     // }
     // return response::Json::<Vec<Tasks>>(&tasks_data.unwrap());
 
-    return response::Json(TaskList {
-        task_list: results.unwrap(),
-    });
+    return response::Json(TaskList { task_list: results.unwrap() });
 }
