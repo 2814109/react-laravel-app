@@ -3,13 +3,13 @@ use hyper::Method;
 use tower_http::cors::{CorsLayer, AllowOrigin};
 
 // use axum::response::Json;
-use axum::{routing::get, Router};
+use axum::{routing::{get,post}, Router};
 pub fn app() -> Router {
     let router: Router = Router::new()
-        .route("/", get(|| async { "Hello, World! 1" }))
-        .route("/test", get(|| async { "Hello, World! 2" }))
-        .route("/new_task", get(|| async { task::create_one("api").await }))
-        .route("/task", get(|| async { task::get_task_by_id().await }))
+        // .route("/", get(|| async { "Hello, World! 1" }))
+        // .route("/test", get(|| async { "Hello, World! 2" }))
+        .route("/task", post(|| async { task::create_one("post test").await }))
+        // .route("/task", get(|| async { task::get_task_by_id().await }))
         .route("/tasks", get(|| async { task::get_all_task().await }))
       .layer(
      CorsLayer::new()

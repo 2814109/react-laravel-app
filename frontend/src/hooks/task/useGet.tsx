@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 const endpoint = import.meta.env.VITE_ENDPONT;
 
-const useGetTasks = () => {
+const useGet = () => {
   const { data } = useQuery(["get-task"], async () => {
     const data = (await fetch(`${endpoint}/tasks`)).json();
     console.log(String(data));
@@ -10,4 +10,4 @@ const useGetTasks = () => {
   return { data };
 };
 
-export default useGetTasks;
+export default useGet;

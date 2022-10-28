@@ -25,6 +25,7 @@ pub struct TaskList {
 }
 
 pub async fn create_one(title: &str) {
+    println!("{:?}", title);
     let utc: DateTime<Utc> = Utc::now();
     // entity を使ってinsert処理を実行
     let new_task = tasks::ActiveModel {
