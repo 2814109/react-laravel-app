@@ -17,3 +17,9 @@ pub fn debug() {
     human.grow_old();
     println!("{}", human.age);
 }
+
+pub fn multiple_println() {
+    for count in 0..3 {
+        println!("{}. Hello World!", count);
+    }
+}

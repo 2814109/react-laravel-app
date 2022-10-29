@@ -12,7 +12,11 @@ import {
   Button,
   Center,
 } from "@chakra-ui/react";
+import useGet from "../../hooks/task/useGet";
+
 const TodoList: FC = () => {
+  const { data } = useGet();
+
   //TODO: to inject by fetch data from api server
   const demoData = [...Array(10)].map((_, index) => {
     const countNumber = index + 1;
@@ -33,10 +37,10 @@ const TodoList: FC = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {demoData.map((data) => (
-            <Tr key={data.id}>
-              <Td>{data.title}</Td>
-              <Td>{data.isClosed ? "do it" : "done"}</Td>
+          {data.task_list.map((object) => (
+            <Tr key={object.id}>
+              <Td>{object.title}</Td>
+              <Td>{object.is_closed ? "do it" : "done"}</Td>
               <Td>
                 <Center>
                   <Button colorScheme="pink">Did it</Button>

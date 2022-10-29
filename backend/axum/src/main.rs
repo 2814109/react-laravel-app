@@ -16,6 +16,7 @@ async fn main() {
         .expect("Database connection failed");
 
     work::debug();
+    work::multiple_println();
     axum::Server::bind(&"0.0.0.0:3333".parse().unwrap())
         .serve(router::app().into_make_service())
         .await

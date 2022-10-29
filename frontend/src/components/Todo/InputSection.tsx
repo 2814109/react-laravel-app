@@ -8,8 +8,10 @@ import {
   FormControl,
   FormLabel,
 } from "@chakra-ui/react";
-
+import usePost from "../../hooks/task/usePost";
 const InputSection: FC = () => {
+  const { request } = usePost();
+
   return (
     <FormControl isRequired>
       <Flex>
@@ -19,7 +21,14 @@ const InputSection: FC = () => {
         </Box>
         <Spacer />
         <Box w={"20%"} mt={"auto"}>
-          <Button colorScheme="teal">登録</Button>
+          <Button
+            colorScheme="teal"
+            onClick={() => {
+              request();
+            }}
+          >
+            登録
+          </Button>
         </Box>
       </Flex>
     </FormControl>
