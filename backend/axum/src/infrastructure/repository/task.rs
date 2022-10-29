@@ -5,6 +5,12 @@ use chrono::{DateTime, Utc};
 use sea_orm::{ActiveModelTrait, ActiveValue, Database, DatabaseConnection, EntityTrait, JsonValue};
 use serde::Serialize;
 
+use axum::{
+    extract::Path,
+};
+// use std::collections::HashMap;
+
+
 #[derive(Serialize)]
 pub struct Task {
     id: i32,
@@ -45,6 +51,9 @@ pub async fn create_one(title: &str) {
 }
 
 pub async fn get_task_by_id() -> response::Json<Task> {
+    // let urlPathParameterId = id.to_string();
+    
+    // let intId =  as i32;
     let db: DatabaseConnection =
         Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
             .await
@@ -59,6 +68,7 @@ pub async fn get_task_by_id() -> response::Json<Task> {
     };
     return response::Json(Task { id: get_id });
 }
+
 
 pub async fn get_all_task() -> response::Json<TaskList> {
     let db: DatabaseConnection =
@@ -85,4 +95,27 @@ pub async fn get_all_task() -> response::Json<TaskList> {
     // return response::Json::<Vec<Tasks>>(&tasks_data.unwrap());
 
     return response::Json(TaskList { task_list: results.unwrap() });
+}
+
+
+pub async fn get_id(Path(id) :Path<String>) -> response::Json<Task> {
+
+ println!("{:?}", id);
+
+ let intId = id.to_string();
+ 
+        let db: DatabaseConnection =
+        Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
+            .await
+            .expect("Database connection failed");
+
+    let result = Tasks::find_by_id(5).one(&db).await;
+
+    let get_id: i32 = match result {
+        Ok(Some(tasks)) => tasks.id,
+        Err(_) => todo!(),
+        Ok(None) => todo!(),
+    };
+    return response::Json(Task { id: get_id });
+    
 }
