@@ -143,7 +143,7 @@ pub async fn create_one_task (Json(payload): Json<CreateTask>) {
     // entity を使ってinsert処理を実行
     let new_task = tasks::ActiveModel {
         id: ActiveValue::NotSet,
-        title: ActiveValue::Set("title".to_owned()),
+        title: ActiveValue::Set(body.title.to_owned()),
         is_closed: ActiveValue::Set(false),
         created_at: ActiveValue::Set(utc.naive_utc()),
         updated_at: ActiveValue::Set(utc.naive_utc()),

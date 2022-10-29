@@ -1,5 +1,5 @@
 use crate::infrastructure::repository::task;
-use hyper::Method;
+use hyper::{header,Method};
 use tower_http::cors::{CorsLayer, AllowOrigin};
 
 use axum::{routing::{get,post}, Router};
@@ -10,9 +10,6 @@ use axum::{routing::{get,post}, Router};
 
 pub fn app() -> Router {
     let router: Router = Router::new()
-        // .route("/", get(|| async { "Hello, World! 1" }))
-        // .route("/test", get(|| async { "Hello, World! 2" }))
-
         .route("/task/new", post(
             {
             move |body| task::create_one_task(body)
@@ -24,6 +21,13 @@ pub fn app() -> Router {
       .layer(
      CorsLayer::new()
          .allow_origin(AllowOrigin::exact("http://localhost:5173".parse().unwrap()))
+        .allow_headers(vec![
+        header::ACCEPT,
+        header::ACCEPT_LANGUAGE,
+        header::AUTHORIZATION,
+        header::CONTENT_LANGUAGE,
+        header::CONTENT_TYPE,
+    ])
          .allow_methods(vec![Method::GET,Method::POST]),);
 
     return router;
