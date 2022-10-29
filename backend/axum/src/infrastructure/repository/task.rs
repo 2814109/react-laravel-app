@@ -102,20 +102,23 @@ pub async fn get_id(Path(id) :Path<String>) -> response::Json<Task> {
 
  println!("{:?}", id);
 
- let intId = id.to_string();
+ let int_id:i32 = id.parse().unwrap();
  
         let db: DatabaseConnection =
         Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
             .await
             .expect("Database connection failed");
 
-    let result = Tasks::find_by_id(5).one(&db).await;
+    let result = Tasks::find_by_id(int_id).one(&db).await;
 
     let get_id: i32 = match result {
         Ok(Some(tasks)) => tasks.id,
         Err(_) => todo!(),
         Ok(None) => todo!(),
     };
+
+     println!("get id {:?}",get_id);
+
     return response::Json(Task { id: get_id });
     
 }
