@@ -27,11 +27,44 @@ src/.env を docker-compose の DB サービスで定義している環境変数
 
 ### STEP3：DB マイグレーション（5 分）
 
-app コンテナに侵入し以下コマンドを実行
+dbのコンテナの名前を調べる。
+以下コマンドを実行し、NAME列 appのコンテナ名を覚えておく。
+```
+docker compose ps
+```
 
+app コンテナに侵入しマイグレーションを実行
+
+APPコンテナ侵入コマンド
+```
+docker exec -it (コンテナ名)  bash
+```
+
+マイグレーションコマンド
 ```
 php artisan migrate
 ```
+
+新しいテーブル作成用のマイグレーションファイル作成コマンド
+```
+php artisan make:migration create_tests_table --create=tasks
+```
+
+migrationファイル内でテーブルとカラムを定義。
+```
+    public function up()
+    {
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('title');
+            $table->boolean('isClosed');
+            $table->timestamps();
+        });
+    }
+```
+
+再度マイグレーションコマンドを実行。
+
 
 ## 環境構築　 backend of axum
 
