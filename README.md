@@ -37,7 +37,7 @@ app コンテナに侵入しマイグレーションを実行
 
 APPコンテナ侵入コマンド
 ```
-docker exec -it (さっき覚えた名前)  bash
+docker exec -it (コンテナ名)  bash
 ```
 
 マイグレーションコマンド
@@ -50,7 +50,19 @@ php artisan migrate
 php artisan make:migration create_tests_table --create=tasks
 ```
 
-migrationファイルにカラムを記入。
+migrationファイル内でテーブルとカラムを定義。
+```
+    public function up()
+    {
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('title');
+            $table->boolean('isClosed');
+            $table->timestamps();
+        });
+    }
+```
+
 再度マイグレーションコマンドを実行。
 
 
