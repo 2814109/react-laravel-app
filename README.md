@@ -78,3 +78,14 @@ http://localhost:8001/
 File タブの ImportFile を選択し、root/api/openapi.yaml を選択し Open  
 編集を行い File タブの SaveAsYAML でファイルを保存
 保存したファイルを api/配下に保存し、PR 作成
+
+### app-1への接続方法(10分)
+起動したコンテナ(app-1)にターミナル接続し、
+composerをインストールする(インストール後にバージョン表示されるか確認)。
+```
+composer install
+composer --version
+```
+ブラウザから、"localhost:8081"へアクセス。
+「キーの生成」と書かれた緑のボタンを押下。
+Laravelの画面が表示されることを確認
