@@ -172,7 +172,7 @@ pub async fn logical_delete_for_task (Json(payload) : Json<LogicalDeleteTask>){
     };
   
 
-    let result = target_task.insert(&db).await;
-    println!("{:?}", result);
+    let result = target_task.update(&db).await;
+    println!("logical delete {:?}", result);
 
 }

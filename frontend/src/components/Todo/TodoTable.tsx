@@ -13,6 +13,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import useGet from "../../hooks/task/useGet";
+import useLogicalDelete from "../../hooks/task/useLogicalDelete";
 
 type TaskType = {
   id: number;
@@ -23,6 +24,7 @@ type TaskType = {
 };
 const TodoList: FC = () => {
   const { data } = useGet();
+  const { request } = useLogicalDelete();
 
   return (
     <TableContainer>
@@ -44,7 +46,9 @@ const TodoList: FC = () => {
               <Td>{object.is_closed ? "do it" : "done"}</Td>
               <Td>
                 <Center>
-                  <Button colorScheme="pink">Did it</Button>
+                  <Button colorScheme="pink" onClick={() => request()}>
+                    Did it
+                  </Button>
                 </Center>
               </Td>
             </Tr>
