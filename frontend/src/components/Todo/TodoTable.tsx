@@ -64,7 +64,10 @@ const TodoList: FC = () => {
                     Edit
                   </Button>
                   <Spacer />
-                  <Button colorScheme="pink" onClick={() => logicalDelete()}>
+                  <Button
+                    colorScheme="pink"
+                    onClick={() => logicalDelete(object.id)}
+                  >
                     Did it
                   </Button>
                   <Spacer />
