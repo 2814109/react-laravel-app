@@ -18,6 +18,10 @@ pub fn app() -> Router {
             {
             move |body| task::logical_delete_for_task(body)
         }))
+          .route("/task/update", post(
+            {
+            move |body| task::update_task(body)
+        }))
         .route("/test/:id",get(task::get_id))
         .route("/task", post(|| async { task::create_one("post test").await }))
         .route("/tasks/:id", get( ||async { task::get_task_by_id().await }))

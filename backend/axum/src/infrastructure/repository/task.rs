@@ -44,6 +44,14 @@ pub struct LogicalDeleteTask {
     pub id: i32,
 }
 
+
+
+#[derive(Deserialize)]
+pub struct UpdateTask {
+    pub id: i32,
+    pub title: String,
+}
+
 pub async fn create_one(title: &str) {
     println!("{:?}", title);
     let utc: DateTime<Utc> = Utc::now();
@@ -174,5 +182,41 @@ pub async fn logical_delete_for_task (Json(payload) : Json<LogicalDeleteTask>){
 
     let result = target_task.update(&db).await;
     println!("logical delete {:?}", result);
+
+}
+
+
+
+pub async fn update_task (Json(payload) : Json<UpdateTask>){
+    let body = payload;
+    let int_id:i32 = body.id;
+    let title: String = body.title;
+
+        let db: DatabaseConnection =
+        Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
+            .await
+            .expect("Database connection failed");
+
+
+    let target_task = Tasks::find_by_id(int_id).one(&db).await;
+      let utc: DateTime<Utc> = Utc::now();
+
+    let update_task = match target_task {
+        Ok(Some(tasks)) => tasks,
+        Err(_) => todo!(),
+        Ok(None) => todo!(),
+    };
+
+    let target_task = tasks::ActiveModel {
+           id: ActiveValue::Set(update_task.id),
+        title: ActiveValue::Set(title),
+        is_closed: ActiveValue::Set(update_task.is_closed),
+        created_at: ActiveValue::Set(update_task.created_at),
+        updated_at: ActiveValue::Set(utc.naive_utc()),
+    };
+  
+
+    let result = target_task.update(&db).await;
+    println!("update {:?}", result);
 
 }
