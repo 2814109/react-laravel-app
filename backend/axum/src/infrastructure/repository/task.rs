@@ -52,6 +52,11 @@ pub struct UpdateTask {
     pub title: String,
 }
 
+#[derive(Deserialize)]
+pub struct PhysicalDeleteTask {
+    pub id: i32,
+}
+
 pub async fn create_one(title: &str) {
     println!("{:?}", title);
     let utc: DateTime<Utc> = Utc::now();
@@ -219,4 +224,18 @@ pub async fn update_task (Json(payload) : Json<UpdateTask>){
     let result = target_task.update(&db).await;
     println!("update {:?}", result);
 
+}
+
+
+pub async fn physical_delete(Json(payload):Json<PhysicalDeleteTask>){
+    let body = payload;
+    let int_id:i32 = body.id;
+
+        let db: DatabaseConnection =
+        Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
+            .await
+            .expect("Database connection failed");
+
+    let result =  Tasks::delete_by_id(int_id).exec(&db).await;
+    println!("physical delete {:?}", result);
 }

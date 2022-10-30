@@ -12,11 +12,12 @@ import {
   Button,
   Center,
   Spacer,
+  Circle,
 } from "@chakra-ui/react";
 import useGet from "../../hooks/task/useGet";
 import useLogicalDelete from "../../hooks/task/useLogicalDelete";
 import useUpdate from "../../hooks/task/useUpdate";
-
+import usePhysicalDlete from "../../hooks/task/usePhysicalDelete";
 type TaskType = {
   id: number;
   title: string;
@@ -28,13 +29,14 @@ const TodoList: FC = () => {
   const { data } = useGet();
   const { request: logicalDelete } = useLogicalDelete();
   const { request: update } = useUpdate();
-
+  const { request: physicalDelete } = usePhysicalDlete();
   return (
     <TableContainer>
       <Table variant="simple">
         <TableCaption>Imperial to metric conversion factors</TableCaption>
         <Thead>
           <Tr>
+            <Th>id</Th>
             <Th>Title</Th>
             <Th>Status</Th>
             <Th>
@@ -45,6 +47,7 @@ const TodoList: FC = () => {
         <Tbody>
           {data.task_list.map((object: TaskType) => (
             <Tr key={object.id}>
+              <Td>{object.id}</Td>
               <Td>{object.title}</Td>
               <Td>{object.is_closed ? "do it" : "done"}</Td>
               <Td>
@@ -58,6 +61,16 @@ const TodoList: FC = () => {
                     Did it
                   </Button>
                   <Spacer />
+                  <Spacer>
+                    <Circle
+                      size="40px"
+                      bg="red"
+                      color="white"
+                      onClick={() => physicalDelete(object.id)}
+                    >
+                      ×
+                    </Circle>
+                  </Spacer>
                 </Center>
               </Td>
             </Tr>
