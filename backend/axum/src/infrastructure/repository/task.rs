@@ -1,7 +1,7 @@
 use crate::entity::prelude::Tasks;
 use crate::entity::tasks;
 use axum::response;
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Utc, NaiveDateTime};
 use sea_orm::{ActiveModelTrait, ActiveValue, Database, DatabaseConnection, EntityTrait, JsonValue};
 use serde::{Serialize, Deserialize};
 
@@ -15,17 +15,12 @@ use axum::{
 
 
 #[derive(Serialize)]
-pub struct Task {
-    id: i32,
-}
-
-#[derive(Serialize)]
 pub struct TaskItem {
     id: i32,
     title: String,
     is_closed: bool,
-    created_at: DateTime<Utc>,
-    updated_at: DateTime<Utc>,
+    created_at: NaiveDateTime,
+    updated_at: NaiveDateTime,
 }
 
 #[derive(Serialize)]
@@ -77,26 +72,6 @@ pub async fn create_one(title: &str) {
     println!("{:?}", result);
 }
 
-pub async fn get_task_by_id() -> response::Json<Task> {
-    // let urlPathParameterId = id.to_string();
-    
-    // let intId =  as i32;
-    let db: DatabaseConnection =
-        Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
-            .await
-            .expect("Database connection failed");
-
-    let result = Tasks::find_by_id(5).one(&db).await;
-
-    let get_id: i32 = match result {
-        Ok(Some(tasks)) => tasks.id,
-        Err(_) => todo!(),
-        Ok(None) => todo!(),
-    };
-    return response::Json(Task { id: get_id });
-}
-
-
 pub async fn get_all_task() -> response::Json<TaskList> {
     let db: DatabaseConnection =
         Database::connect("postgresql://postgres:postgres@localhost:5432/postgres".to_string())
@@ -108,7 +83,7 @@ pub async fn get_all_task() -> response::Json<TaskList> {
 }
 
 
-pub async fn get_id(Path(id) :Path<String>) -> response::Json<Task> {
+pub async fn get_task_by_id(Path(id) :Path<String>) -> response::Json<TaskItem> {
 
  println!("{:?}", id);
 
@@ -121,15 +96,15 @@ pub async fn get_id(Path(id) :Path<String>) -> response::Json<Task> {
 
     let result = Tasks::find_by_id(int_id).one(&db).await;
 
-    let get_id: i32 = match result {
-        Ok(Some(tasks)) => tasks.id,
+    let task = match result {
+        Ok(Some(tasks)) => tasks,
         Err(_) => todo!(),
         Ok(None) => todo!(),
     };
 
-     println!("get id {:?}",get_id);
+     println!("get id {:?}",task);
 
-    return response::Json(Task { id: get_id });
+    return response::Json(TaskItem { id: task.id,title: task.title,is_closed: task.is_closed, created_at: task.created_at ,updated_at: task.updated_at });
     
 }
 

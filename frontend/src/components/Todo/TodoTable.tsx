@@ -18,6 +18,7 @@ import useGet from "../../hooks/task/useGet";
 import useLogicalDelete from "../../hooks/task/useLogicalDelete";
 import useUpdate from "../../hooks/task/useUpdate";
 import usePhysicalDlete from "../../hooks/task/usePhysicalDelete";
+import useGetById from "../../hooks/task/useGetById";
 type TaskType = {
   id: number;
   title: string;
@@ -30,6 +31,7 @@ const TodoList: FC = () => {
   const { request: logicalDelete } = useLogicalDelete();
   const { request: update } = useUpdate();
   const { request: physicalDelete } = usePhysicalDlete();
+  const { fetcher: getById } = useGetById();
   return (
     <TableContainer>
       <Table variant="simple">
@@ -52,6 +54,11 @@ const TodoList: FC = () => {
               <Td>{object.is_closed ? "do it" : "done"}</Td>
               <Td>
                 <Center>
+                  <Spacer />
+                  <Button colorScheme="blue" onClick={() => getById(object.id)}>
+                    Show it
+                  </Button>
+                  <Spacer />
                   <Spacer />
                   <Button colorScheme="green" onClick={() => update()}>
                     Edit

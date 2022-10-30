@@ -26,9 +26,8 @@ pub fn app() -> Router {
             {
             move |body| task::physical_delete(body)
         }))
-        .route("/test/:id",get(task::get_id))
+        .route("/task/:id",get(task::get_task_by_id))
         .route("/task", post(|| async { task::create_one("post test").await }))
-        .route("/tasks/:id", get( ||async { task::get_task_by_id().await }))
         .route("/tasks", get(|| async { task::get_all_task().await }))
       .layer(
      CorsLayer::new()
