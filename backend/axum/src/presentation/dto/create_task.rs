@@ -1,4 +1,6 @@
-struct Task {
-    title: String,
-    is_closed: bool,
-}
+// use serde::{Deserialize};
+
+// #[derive(Deserialize)]
+// pub struct CreateTask {
+//     pub title: String,
+// }

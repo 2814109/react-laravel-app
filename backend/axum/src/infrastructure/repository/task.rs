@@ -10,7 +10,6 @@ use axum::{
 };
 use axum::{
     Json,
-  
 };
 // use std::collections::HashMap;
 
@@ -87,23 +86,6 @@ pub async fn get_all_task() -> response::Json<TaskList> {
             .expect("Database connection failed");
 
     let results = Tasks::find().into_json().all(&db).await;
-    // let tasks_data: Vec<TaskItem> = match results {
-    //     Ok(tasks) => tasks,
-    //     Err(_) => todo!(),
-    //     // Ok(None) => todo!(),
-    // };
-    // println!("{:?}", tasks_data);
-
-    // let results_data =    tasks_data.into_iter().map(|argument| argument.id);
-
-    // let results_data = tasks_data.into_iter().map(|argument| argument.id);
-    // println!("{:?}", results_data);
-
-    // for value in &tasks_data {
-    //     println!("{:?}", value);
-    // }
-    // return response::Json::<Vec<Tasks>>(&tasks_data.unwrap());
-
     return response::Json(TaskList { task_list: results.unwrap() });
 }
 
@@ -143,7 +125,7 @@ pub async fn create_one_task (Json(payload): Json<CreateTask>) {
     // entity を使ってinsert処理を実行
     let new_task = tasks::ActiveModel {
         id: ActiveValue::NotSet,
-        title: ActiveValue::Set(body.title.to_owned()),
+        title: ActiveValue::Set("title".to_owned()),
         is_closed: ActiveValue::Set(false),
         created_at: ActiveValue::Set(utc.naive_utc()),
         updated_at: ActiveValue::Set(utc.naive_utc()),

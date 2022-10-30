@@ -14,6 +14,13 @@ import {
 } from "@chakra-ui/react";
 import useGet from "../../hooks/task/useGet";
 
+type TaskType = {
+  id: number;
+  title: string;
+  is_closed: boolean;
+  created_at: Date;
+  updated_at: Date;
+};
 const TodoList: FC = () => {
   const { data } = useGet();
 
@@ -31,7 +38,7 @@ const TodoList: FC = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.task_list.map((object) => (
+          {data.task_list.map((object: TaskType) => (
             <Tr key={object.id}>
               <Td>{object.title}</Td>
               <Td>{object.is_closed ? "do it" : "done"}</Td>
