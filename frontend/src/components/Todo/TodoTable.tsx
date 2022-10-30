@@ -17,12 +17,6 @@ import useGet from "../../hooks/task/useGet";
 const TodoList: FC = () => {
   const { data } = useGet();
 
-  //TODO: to inject by fetch data from api server
-  const demoData = [...Array(10)].map((_, index) => {
-    const countNumber = index + 1;
-    return { id: countNumber, title: `title:${countNumber}`, isClosed: false };
-  });
-
   return (
     <TableContainer>
       <Table variant="simple">
